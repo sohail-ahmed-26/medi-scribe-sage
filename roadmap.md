@@ -1,0 +1,3 @@
+- [ ] Apply clinic identity and redesign patient register, patient file, and printable prescription.
+- [ ] Deliver a complete offline Antigravity ingestion prompt.
+- [ ] Verify the live preview, publish, and check GitHub connection.
