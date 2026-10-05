@@ -69,18 +69,18 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+  h1, h2, h3 { font-family: var(--font-serif); letter-spacing: 0; }
 }
 
-@utility letter-paper {
-  background-color: var(--paper);
-  background-image: repeating-linear-gradient(to bottom, transparent 0 31px, color-mix(in oklch, var(--primary) 10%, transparent) 31px 32px);
-  box-shadow: 0 1px 0 var(--border), 0 20px 50px -20px color-mix(in oklch, var(--primary) 35%, transparent);
+@utility clinical-sheet {
+  background-color: var(--card);
+  box-shadow: 0 12px 40px -20px color-mix(in oklch, var(--foreground) 24%, transparent);
 }
 
 @media print {
   .no-print { display: none !important; }
-  body { background: white; }
-  .letter-paper { box-shadow: none; }
-  @page { size: A5; margin: 10mm; }
+  body { background: var(--card); }
+  .clinical-sheet { box-shadow: none; border: 0; width: 100%; max-width: none; min-height: 0; padding: 0; }
+  main { max-width: none !important; padding: 0 !important; }
+  @page { size: A4; margin: 16mm; }
 }

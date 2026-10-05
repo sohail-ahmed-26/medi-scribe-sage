@@ -7,10 +7,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_authenticated/import")({
   head: () => ({
     meta: [
-      { title: "Import books — Materia Clinic" },
+      { title: "Import books — City Homeopathic Clinic" },
       { name: "description", content: "Upload the knowledge file generated from your medical books." },
-      { property: "og:title", content: "Import books — Materia Clinic" },
+      { property: "og:title", content: "Import books — City Homeopathic Clinic" },
       { property: "og:description", content: "Upload the knowledge file generated from your medical books." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: ImportPage,

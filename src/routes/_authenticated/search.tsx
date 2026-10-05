@@ -8,10 +8,12 @@ import { searchKnowledge } from "@/lib/knowledge";
 export const Route = createFileRoute("/_authenticated/search")({
   head: () => ({
     meta: [
-      { title: "Materia Medica — Materia Clinic" },
+      { title: "Materia Medica — City Homeopathic Clinic" },
       { name: "description", content: "Search medicines or diseases and see indications, symptoms and details." },
-      { property: "og:title", content: "Materia Medica — Materia Clinic" },
+      { property: "og:title", content: "Materia Medica — City Homeopathic Clinic" },
       { property: "og:description", content: "Search medicines or diseases from your reference books." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SearchPage,

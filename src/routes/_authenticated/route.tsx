@@ -19,7 +19,7 @@ function Shell() {
     <div className="min-h-screen">
       <header className="no-print border-b bg-card/70 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center gap-2 px-4 py-3">
-          <span className="mr-4 font-serif text-xl"><span className="text-seal">℞</span> Materia Clinic</span>
+          <span className="mr-4 font-serif text-lg font-semibold leading-tight"><span className="text-primary">℞</span> City Homeopathic Clinic</span>
           <Link to="/search" className={link} activeProps={active}>Materia Medica</Link>
           <Link to="/patients" className={link} activeProps={active}>Patients</Link>
           <Link to="/import" className={link} activeProps={active}>Import books</Link>
