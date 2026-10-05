@@ -30,3 +30,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# RAG Pipeline
+rag_pipeline/venv/
+rag_pipeline/output/
+rag_pipeline/chroma/
+books/
+documents/
+__pycache__/
