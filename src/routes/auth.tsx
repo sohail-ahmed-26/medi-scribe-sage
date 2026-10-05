@@ -9,10 +9,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in — Materia Clinic" },
+      { title: "Sign in — City Homeopathic Clinic" },
       { name: "description", content: "Doctor sign-in for the private clinic desk." },
-      { property: "og:title", content: "Sign in — Materia Clinic" },
+      { property: "og:title", content: "Sign in — City Homeopathic Clinic" },
       { property: "og:description", content: "Doctor sign-in for the private clinic desk." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,
@@ -40,9 +42,9 @@ function AuthPage() {
 
   return (
     <div className="flex min-h-screen items-center justify-center px-4">
-      <form onSubmit={submit} className="letter-paper w-full max-w-sm rounded-md p-8">
-        <p className="text-3xl text-seal font-serif">℞</p>
-        <h1 className="mt-2 text-3xl">Materia Clinic</h1>
+      <form onSubmit={submit} className="w-full max-w-sm border-t-2 border-primary bg-card p-8 shadow-sm">
+        <p className="text-3xl text-primary font-serif">℞</p>
+        <h1 className="mt-2 text-3xl">City Homeopathic Clinic</h1>
         <p className="mb-6 text-sm text-muted-foreground">Private desk — doctor access only.</p>
         <div className="space-y-4">
           <div><Label>Email</Label><Input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} /></div>

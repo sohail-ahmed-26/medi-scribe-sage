@@ -51,7 +51,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Materia Clinic — Doctor's Desk" },
+      { title: "City Homeopathic Clinic — Doctor's Desk" },
       { name: "description", content: "Private medicine & symptom lookup with patient prescriptions." },
       { name: "robots", content: "noindex, nofollow" },
       { property: "og:type", content: "website" },
