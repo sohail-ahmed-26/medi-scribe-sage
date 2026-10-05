@@ -57,17 +57,17 @@ function PatientPage() {
 
   async function savePatient() {
     const { error } = await supabase.from("patients").update({ name: p.name, age: p.age ? +p.age : null, phone: p.phone || null }).eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     qc.invalidateQueries({ queryKey: ["patient", id] });
     toast.success("Patient updated");
   }
 
   async function saveVisit() {
     const { data: v, error } = await supabase.from("visits").insert({ patient_id: id, visit_date: date, symptoms, diagnosis, notes }).select().single();
-    if (error || !v) return toast.error(error?.message ?? "Failed");
+    if (error || !v) { toast.error(error?.message ?? "Failed"); return; }
     if (rx.length) {
       const { error: e2 } = await supabase.from("prescriptions").insert(rx.map(({ medicine_name, potency, dosage }) => ({ visit_id: v.id, medicine_name, potency, dosage })));
-      if (e2) return toast.error(e2.message);
+      if (e2) { toast.error(e2.message); return; }
     }
     toast.success("Visit saved");
     nav({ to: "/print/$visitId", params: { visitId: v.id } });

@@ -30,7 +30,7 @@ function PatientsPage() {
   async function add(e: React.FormEvent) {
     e.preventDefault();
     const { error } = await supabase.from("patients").insert({ name: form.name, age: form.age ? +form.age : null, phone: form.phone || null });
-    if (error) return toast.error(error.message);
+    if (error) { toast.error(error.message); return; }
     setForm({ name: "", age: "", phone: "" });
     qc.invalidateQueries({ queryKey: ["patients"] });
     toast.success("Patient added");
