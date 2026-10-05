@@ -14,13 +14,274 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      book_chunks: {
+        Row: {
+          book: string
+          content: string
+          embedding: string | null
+          fts: unknown
+          id: string
+          page: number | null
+        }
+        Insert: {
+          book: string
+          content: string
+          embedding?: string | null
+          fts?: unknown
+          id?: string
+          page?: number | null
+        }
+        Update: {
+          book?: string
+          content?: string
+          embedding?: string | null
+          fts?: unknown
+          id?: string
+          page?: number | null
+        }
+        Relationships: []
+      }
+      conditions: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          fts: unknown
+          id: string
+          name: string
+          source: string | null
+          symptoms: string[] | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          fts?: unknown
+          id?: string
+          name: string
+          source?: string | null
+          symptoms?: string[] | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          fts?: unknown
+          id?: string
+          name?: string
+          source?: string | null
+          symptoms?: string[] | null
+        }
+        Relationships: []
+      }
+      medicine_conditions: {
+        Row: {
+          condition_id: string
+          medicine_id: string
+          notes: string | null
+        }
+        Insert: {
+          condition_id: string
+          medicine_id: string
+          notes?: string | null
+        }
+        Update: {
+          condition_id?: string
+          medicine_id?: string
+          notes?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "medicine_conditions_condition_id_fkey"
+            columns: ["condition_id"]
+            isOneToOne: false
+            referencedRelation: "conditions"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medicine_conditions_medicine_id_fkey"
+            columns: ["medicine_id"]
+            isOneToOne: false
+            referencedRelation: "medicines"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      medicines: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          fts: unknown
+          id: string
+          name: string
+          potencies: string[] | null
+          source: string | null
+          uses: string | null
+          why_used: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          fts?: unknown
+          id?: string
+          name: string
+          potencies?: string[] | null
+          source?: string | null
+          uses?: string | null
+          why_used?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          fts?: unknown
+          id?: string
+          name?: string
+          potencies?: string[] | null
+          source?: string | null
+          uses?: string | null
+          why_used?: string | null
+        }
+        Relationships: []
+      }
+      patients: {
+        Row: {
+          age: number | null
+          created_at: string | null
+          doctor_id: string
+          id: string
+          name: string
+          phone: string | null
+        }
+        Insert: {
+          age?: number | null
+          created_at?: string | null
+          doctor_id?: string
+          id?: string
+          name: string
+          phone?: string | null
+        }
+        Update: {
+          age?: number | null
+          created_at?: string | null
+          doctor_id?: string
+          id?: string
+          name?: string
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      prescriptions: {
+        Row: {
+          doctor_id: string
+          dosage: string | null
+          id: string
+          medicine_name: string
+          potency: string | null
+          visit_id: string
+        }
+        Insert: {
+          doctor_id?: string
+          dosage?: string | null
+          id?: string
+          medicine_name: string
+          potency?: string | null
+          visit_id: string
+        }
+        Update: {
+          doctor_id?: string
+          dosage?: string | null
+          id?: string
+          medicine_name?: string
+          potency?: string | null
+          visit_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "prescriptions_visit_id_fkey"
+            columns: ["visit_id"]
+            isOneToOne: false
+            referencedRelation: "visits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      visits: {
+        Row: {
+          created_at: string | null
+          diagnosis: string | null
+          doctor_id: string
+          id: string
+          notes: string | null
+          patient_id: string
+          symptoms: string | null
+          visit_date: string
+        }
+        Insert: {
+          created_at?: string | null
+          diagnosis?: string | null
+          doctor_id?: string
+          id?: string
+          notes?: string | null
+          patient_id: string
+          symptoms?: string | null
+          visit_date?: string
+        }
+        Update: {
+          created_at?: string | null
+          diagnosis?: string | null
+          doctor_id?: string
+          id?: string
+          notes?: string | null
+          patient_id?: string
+          symptoms?: string | null
+          visit_date?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "visits_patient_id_fkey"
+            columns: ["patient_id"]
+            isOneToOne: false
+            referencedRelation: "patients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      search_chunks: {
+        Args: { q: string }
+        Returns: {
+          book: string
+          page: number
+          snippet: string
+        }[]
+      }
+      search_conditions: {
+        Args: { q: string }
+        Returns: {
+          description: string
+          id: string
+          medicines: Json
+          name: string
+          rank: number
+          symptoms: string[]
+        }[]
+      }
+      search_medicines: {
+        Args: { q: string }
+        Returns: {
+          conditions: Json
+          description: string
+          id: string
+          name: string
+          potencies: string[]
+          rank: number
+          uses: string
+          why_used: string
+        }[]
+      }
+      show_limit: { Args: never; Returns: number }
+      show_trgm: { Args: { "": string }; Returns: string[] }
     }
     Enums: {
       [_ in never]: never
