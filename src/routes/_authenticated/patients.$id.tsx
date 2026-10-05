@@ -12,10 +12,12 @@ import { toast } from "sonner";
 export const Route = createFileRoute("/_authenticated/patients/$id")({
   head: () => ({
     meta: [
-      { title: "Patient file — Materia Clinic" },
+      { title: "Patient file — City Homeopathic Clinic" },
       { name: "description", content: "Edit patient, add visit and write prescription." },
-      { property: "og:title", content: "Patient file — Materia Clinic" },
+      { property: "og:title", content: "Patient file — City Homeopathic Clinic" },
       { property: "og:description", content: "Edit patient, add visit and write prescription." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: PatientPage,
@@ -77,19 +79,24 @@ function PatientPage() {
 
   return (
     <div className="space-y-8">
-      <Link to="/patients" className="text-sm text-muted-foreground">← All patients</Link>
-      <section className="rounded-md border bg-card p-5">
-        <h2 className="mb-3 text-xl">Edit patient</h2>
+      <header className="border-b pb-6">
+        <Link to="/patients" className="text-sm text-primary hover:underline">← All patients</Link>
+        <p className="mt-5 text-xs font-semibold uppercase text-muted-foreground">Patient record</p>
+        <h1 className="mt-1 break-words text-3xl font-semibold sm:text-4xl">{patient.name}</h1>
+        <p className="mt-2 text-sm text-muted-foreground">{patient.age ? `${patient.age} years` : "Age not recorded"}{patient.phone ? ` · ${patient.phone}` : ""}</p>
+      </header>
+      <section className="border-t-2 border-primary bg-card p-5 shadow-sm">
+        <h2 className="mb-4 text-xl font-semibold">Patient details</h2>
         <div className="grid gap-3 sm:grid-cols-[2fr_1fr_2fr_auto]">
-          <Input value={p.name} onChange={(e) => setP({ ...p, name: e.target.value })} placeholder="Name" />
-          <Input type="number" value={p.age} onChange={(e) => setP({ ...p, age: e.target.value })} placeholder="Age" />
-          <Input value={p.phone} onChange={(e) => setP({ ...p, phone: e.target.value })} placeholder="Phone" />
-          <Button variant="secondary" onClick={savePatient}>Save</Button>
+          <div><Label htmlFor="edit-name">Name</Label><Input id="edit-name" value={p.name} onChange={(e) => setP({ ...p, name: e.target.value })} placeholder="Name" /></div>
+          <div><Label htmlFor="edit-age">Age</Label><Input id="edit-age" type="number" min="0" max="130" value={p.age} onChange={(e) => setP({ ...p, age: e.target.value })} placeholder="Age" /></div>
+          <div><Label htmlFor="edit-phone">Phone</Label><Input id="edit-phone" value={p.phone} onChange={(e) => setP({ ...p, phone: e.target.value })} placeholder="Phone" /></div>
+          <Button className="self-end" variant="secondary" onClick={savePatient}>Save</Button>
         </div>
       </section>
 
-      <section className="rounded-md border bg-card p-5">
-        <h2 className="mb-4 text-2xl">Add visit</h2>
+      <section className="border-t-2 border-primary bg-card p-5 shadow-sm sm:p-7">
+        <h2 className="mb-5 text-2xl font-semibold">New consultation</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <div><Label>Date</Label><Input type="date" value={date} onChange={(e) => setDate(e.target.value)} /></div>
           <div><Label>Disease / diagnosis</Label><Input value={diagnosis} onChange={(e) => setDiagnosis(e.target.value)} /></div>
@@ -98,7 +105,7 @@ function PatientPage() {
 
         <div className="mt-5">
           <Label>Find medicine (by symptom, disease or name)</Label>
-          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search books…" className="bg-paper" />
+          <Input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search books…" className="bg-background" />
           {hits && (
             <div className="mt-2 max-h-64 overflow-auto rounded-md border">
               {hits.medicines.map((m) => (
@@ -115,7 +122,7 @@ function PatientPage() {
           )}
         </div>
 
-        <h3 className="mt-6 text-lg">Prescription</h3>
+        <h3 className="mt-7 border-t pt-5 text-lg font-semibold">Prescription</h3>
         {rx.length === 0 && <p className="text-sm text-muted-foreground">Click a medicine above to add it.</p>}
         <div className="space-y-2">
           {rx.map((r, i) => (
@@ -130,14 +137,14 @@ function PatientPage() {
         </div>
 
         <div className="mt-5"><Label>Doctor's notes / instructions</Label><Textarea value={notes} onChange={(e) => setNotes(e.target.value)} /></div>
-        <Button className="mt-5" onClick={saveVisit}>Save visit & print</Button>
+        <Button className="mt-6" onClick={saveVisit}>Save visit & view prescription</Button>
       </section>
 
       <section>
-        <h2 className="mb-3 text-xl">Visit history</h2>
+        <h2 className="mb-4 border-b pb-3 text-xl font-semibold">Visit history</h2>
         <ul className="space-y-2">
           {visits.map((v) => (
-            <li key={v.id} className="flex items-center justify-between rounded-md border bg-card px-4 py-3">
+            <li key={v.id} className="flex flex-wrap items-center justify-between gap-3 border-b bg-card px-4 py-4">
               <span><b>{v.visit_date}</b> · {v.diagnosis || v.symptoms} · {v.prescriptions.length} medicine(s)</span>
               <Link to="/print/$visitId" params={{ visitId: v.id }} className="text-sm text-primary underline">Print</Link>
             </li>
